@@ -29,6 +29,6 @@ class SprintsController < ApplicationController
   end
 
   def set_project
-    @project = Project.preload(:sprints).find_by(id: params[:project_id])
+    @project = Project.with_sprints(params[:project_id])
   end
 end

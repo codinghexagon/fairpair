@@ -70,6 +70,6 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-    @project = Project.preload(:user_projects).find_by(id: params[:id])
+    @project = Project.with_sprints(params[:id])
   end
 end

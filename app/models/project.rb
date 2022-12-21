@@ -11,4 +11,8 @@ class Project < ApplicationRecord
   def project_developer_ids(current_user)
     user_projects.where.not(user_id: current_user.id).pluck(:user_id)
   end
+
+  def self.with_sprints(id)
+    preload(:sprints).find_by(id: id)
+  end
 end

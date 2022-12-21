@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Sprint < ApplicationRecord
   belongs_to :project
   has_one :schedule, dependent: :destroy

@@ -1,0 +1,72 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'vendor/bundle/**/*'
+
+require:
+  - rubocop-rails
+
+Metrics/ModuleLength:
+  Enabled: true
+
+Metrics/AbcSize:
+  Enabled: true
+  Max: 50
+
+Metrics/BlockLength:
+  CountComments: true  # count full line comments?
+  Max: 25
+  IgnoredMethods: []
+  Exclude:
+    # - 'config/routes.rb'
+    - 'config/**/*'
+    - 'spec/**/*'
+    # - 'bin/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'db/migrate/*.rb'
+
+Metrics/MethodLength:
+  Max: 15
+
+Layout/LineLength:
+  Description: 'Limit lines to 120 characters.'
+  Max: 120
+  Exclude:
+    - 'config/**/*'
+    - 'bin/bundle'
+
+Lint/Loop:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails/Date:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'bin/bundle'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'bin/bundle'
+

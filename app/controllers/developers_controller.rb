@@ -1,10 +1,15 @@
-class DevelopersController < ApplicationController
+# frozen_string_literal: true
 
+class DevelopersController < ApplicationController
   before_action :set_developer, except: %i[index create new]
+
+  def show; end
 
   def new
     @developer = User.new
   end
+
+  def edit; end
 
   def create
     @developer = User.new(user_params)
@@ -14,12 +19,6 @@ class DevelopersController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
-  end
-
-  def edit
   end
 
   def update
@@ -49,7 +48,7 @@ class DevelopersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :user_name).tap { |additional_param| additional_param[:role] = 1 }
   end
-  
+
   def set_developer
     @developer = User.find_by(id: params[:id])
   end

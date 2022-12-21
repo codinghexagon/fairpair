@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_005554) do
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_projects_on_name", unique: true
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -33,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_005554) do
     t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_sprints_on_name", unique: true
     t.index ["project_id"], name: "index_sprints_on_project_id"
   end
 

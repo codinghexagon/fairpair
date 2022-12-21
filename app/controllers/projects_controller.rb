@@ -1,5 +1,6 @@
-class ProjectsController < ApplicationController
+# frozen_string_literal: true
 
+class ProjectsController < ApplicationController
   before_action :set_project, except: %i[index create new]
 
   def index
@@ -7,9 +8,16 @@ class ProjectsController < ApplicationController
     @developers = current_user.subordinates
   end
 
+  def show
+    @developers = User.where(id: @project.user_projects.where.not(user_id: current_user.id).pluck(:user_id).uniq)
+    @sprints = @project.sprints.count
+  end
+
   def new
     @project = Project.new
   end
+
+  def edit; end
 
   def create
     @project = current_user.projects.create(project_params)
@@ -18,14 +26,6 @@ class ProjectsController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
-    @developers = User.where(id: @project.user_projects.where.not(user_id: current_user.id).pluck(:user_id).uniq)
-    @sprints = @project.sprints.count 
-  end
-
-  def edit
   end
 
   def update
@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
   def add_developer
     user = User.find_by(id: params[:developer_id])
     @project.user_projects.create(user: user)
-    redirect_back fallback_location:  manage_developers_project_path(@project)
+    redirect_back fallback_location: manage_developers_project_path(@project)
   end
 
   private
@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(:name)
   end
-  
+
   def set_project
     @project = Project.find_by(id: params[:id])
   end

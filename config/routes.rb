@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  root "projects#index"
+  root 'projects#index'
 
   devise_for :users
 
@@ -13,5 +15,4 @@ Rails.application.routes.draw do
 
     resources :sprints, only: %i[index create]
   end
-  
 end

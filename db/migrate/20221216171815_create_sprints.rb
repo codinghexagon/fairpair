@@ -6,5 +6,6 @@ class CreateSprints < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :sprints, :name, unique: true
   end
 end

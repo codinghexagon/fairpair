@@ -1,0 +1,6 @@
+<h1>manage developers page</h1>
+
+<% @developers.each do |developer| %>
+<%= developer.user_name %>
+<%= link_to 'add to project', add_developer_project_path(@project, :developer_id => developer.id)%>
+<%end%>

@@ -3,7 +3,13 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :users, only: %i[new create destroy update]
+  resources :developers
 
-  resources :projects
+  resources :projects do
+    member do
+      get :manage_developers
+      get :add_developer
+    end
+  end
+  
 end

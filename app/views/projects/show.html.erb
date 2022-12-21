@@ -1,3 +1,10 @@
 <h1>Projects show page</h1>
 
 <h1><%= @project.name %></h1>
+<%= link_to 'manage developers', manage_developers_project_path(@project) %>
+
+
+<h1>project developrs</h1>
+<% @developers.each do |dev|%>
+    <%= dev.user_name%>
+<% end %>

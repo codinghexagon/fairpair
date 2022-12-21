@@ -3,7 +3,8 @@ class ProjectsController < ApplicationController
   before_action :set_project, except: %i[index create new]
 
   def index
-    @projects = Project.all
+    @projects = current_user.projects
+    @developers = current_user.subordinates
   end
 
   def new
@@ -11,8 +12,8 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = current_user.projects.new(project_params)
-    if @project.save
+    @project = current_user.projects.create(project_params)
+    if @project
       redirect_to project_path(@project)
     else
       render :new
@@ -20,6 +21,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @developers = User.where(id: @project.user_projects.where.not(user_id: current_user.id).pluck(:user_id).uniq)
   end
 
   def edit
@@ -45,6 +47,18 @@ class ProjectsController < ApplicationController
       flash[:failure] = 'Project cant be deleted'
       redirect_to projects_path
     end
+  end
+
+  def manage_developers
+    @devs = @project.user_projects.where.not(user_id: current_user.id).pluck(:user_id)
+    developer_ids = current_user.subordinates.where.not(id: @devs)
+    @developers = User.where(id: developer_ids)
+  end
+
+  def add_developer
+    user = User.find_by(id: params[:developer_id])
+    @project.user_projects.create(user: user)
+    redirect_back fallback_location:  manage_developers_project_path(@project)
   end
 
   private

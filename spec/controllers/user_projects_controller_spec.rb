@@ -1,19 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe UserProjectsController, type: :controller do
-  let!(:lead) { create(:user, role: 0) }
-  let!(:developer) { create(:user, role: 1, lead_id: lead.id) }
+  let!(:project_lead) { create(:user, role: 0) }
+  let!(:developer) { create(:user, role: 1, lead_id: project_lead.id) }
   let!(:project) { create(:project) }
 
   before do
-    sign_in(lead)
+    sign_in(project_lead)
+    project.users.push([project_lead, developer])
   end
 
   describe 'DELETE /destroy' do
-    before do
-      project.users.push([lead, developer])
-    end
-
     it 'Destroys the requested project with notice' do
       delete :destroy, params: { developer_id: developer.id, project_id: project.id }
 

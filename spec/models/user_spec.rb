@@ -23,10 +23,10 @@ RSpec.describe User, type: :model do
     end
 
     context 'scopes' do
-      let(:testUser) { create(:user) }
+      let(:test_user) { create(:user) }
 
       it 'should return users in descending order' do
-        expect(User.id_ordered_desc).to include(testUser)
+        expect(User.id_ordered_desc).to include(test_user)
       end
     end
 

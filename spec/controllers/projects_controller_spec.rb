@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
-  let!(:lead) { create(:user, role: 0) }
-  let!(:developer) { create(:user, role: 1, lead_id: lead.id) }
+  let!(:project_lead) { create(:user, role: 0) }
+  let!(:developer) { create(:user, role: 1, lead_id: project_lead.id) }
   let!(:project) { create(:project) }
   let!(:sprint) { create(:sprint) }
 
   before do
-    sign_in(lead)
+    sign_in(project_lead)
+    project.users.push(project_lead)
   end
 
   describe 'GET /index' do
     it 'Assigns all user projects as @projects' do
-      lead.projects.push(project)
       get :index
 
       expect(assigns(:projects)).to eq([project])
@@ -21,7 +21,7 @@ RSpec.describe ProjectsController, type: :controller do
     it 'Responses success' do
       get :index
 
-      expect(response).to be_successful
+      expect(response.status).to eq(200)
     end
   end
 
@@ -115,13 +115,12 @@ RSpec.describe ProjectsController, type: :controller do
       delete :destroy, params: { id: project.id }
 
       expect(flash[:notice]).to eql('Project was successfully destroyed.')
-      expect(response).to redirect_to(root_path)
     end
 
-    it 'Dosent destroys the requested project because of invalid id' do
-      delete :destroy, params: { id: Faker::Number.number }
+    it 'Redirects to root path after project deletion' do
+      delete :destroy, params: { id: project.id }
 
-      expect(flash[:failure]).to eql('Project does not exists.')
+      expect(response).to redirect_to(root_path)
     end
 
     it 'Will not delete project because of no project id' do

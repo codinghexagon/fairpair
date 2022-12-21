@@ -9,7 +9,6 @@ class SprintsController < ApplicationController
   end
 
   def create
-
     manage_sprint_schedule(schedule_service_params)
 
     redirect_back fallback_location: project_path(@project)

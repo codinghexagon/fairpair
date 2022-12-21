@@ -3,7 +3,7 @@
 class ShuffleSprintDevelopers < ApplicationService
   require 'round_robin_tournament'
 
-  attr_accessor :sprint, :project, :current_user, :view_schedule
+  attr_accessor :sprints, :project, :current_user, :view_schedule
 
   def initialize(params)
     @sprints = params[:sprints].to_i if params[:sprints].present?

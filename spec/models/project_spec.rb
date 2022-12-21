@@ -19,22 +19,22 @@ RSpec.describe Project, type: :model do
     end
 
     context 'scopes' do
-      let(:testProject) { create(:project) }
+      let(:project) { create(:project) }
 
       it 'should return projects in descending order' do
-        expect(Project.id_ordered_desc).to include(testProject)
+        expect(Project.id_ordered_desc).to include(project)
       end
     end
 
     context 'methods' do
-      let(:testUser) { create(:user) }
+      let(:developer) { create(:user) }
 
       it 'should return developer ids for the project' do
-        test_user = user.subordinates << testUser
-        test_project = user.projects.create(name: 'test_project')
-        test_project.user_projects.create(user: testUser)
+        user.subordinates << developer
+        test_project = user.projects.create(name: 'Test Project')
+        test_project.user_projects.create(user: developer)
 
-        expect(test_project.project_developer_ids(user).last).to eq(testUser.id)
+        expect(test_project.project_developer_ids(user).last).to eq(developer.id)
       end
     end
   end

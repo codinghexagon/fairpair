@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 class TeamRow < ViewComponent::Base
-  attr_reader :schedule
+  with_collection_parameter :schedule
+  attr_reader :schedule, :schedule_counter, :team_member
 
-  def initialize(schedule: nil, sprint_counter: nil, team_no: nil)
+  def initialize(schedule: nil)
     super
     @schedule = schedule
-    @sprint_number = sprint_counter
-    @team_no = team_no
   end
 
   def first_member
-    User.find_by(id: @schedule[@sprint_number][@team_no].first).user_name
+    User.find_by(id: @schedule.first).user_name
   end
 
   def second_member
-    User.find_by(id: @schedule[@sprint_number][@team_no].second)&.user_name || 'N/A'
+    User.find_by(id: @schedule.last)&.user_name || 'N/A'
   end
 end

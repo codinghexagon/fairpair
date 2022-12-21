@@ -4,7 +4,6 @@ class SprintsController < ApplicationController
   before_action :set_project
 
   def index
-    debugger
     @schedule = manage_sprint_schedule(schedule_service_params)
   end
 

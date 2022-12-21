@@ -43,6 +43,7 @@ class ShuffleSprintDevelopers < ApplicationService
       developers = developers.shuffle
       team_pairs_for_sprints << make_unique_pairs(developers).last
     end
+
     developers.delete(nil) if developers.include?(nil)
     team_pairs_for_sprints = replace_nil_from_pairs(team_pairs_for_sprints) if developers.count.odd?
 

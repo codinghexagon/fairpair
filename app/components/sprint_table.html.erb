@@ -1,20 +1,18 @@
 <div class='mb-5'>
-  <h1 class="text-md font-bold tracking-tight text-gray-900 dark:text-white"><%= sprint.name %></h1>
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  <h1 class='text-md font-bold tracking-tight text-gray-900 dark:text-white'><%= sprint.name %></h1>
+  <table class='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+    <thead class='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
       <tr>
-        <th scope="col" class="py-3 px-6">
+        <th scope='col' class='py-3 px-6'>
             Team Member 1
         </th>
-        <th scope="col" class="py-3 px-6">
+        <th scope='col' class='py-3 px-6'>
             Team member 2
         </th>
       </tr>
     </thead>
     <tbody>
-      <% 0.upto(team_count-1) do |team| %>
-        <%= render TeamRow.new(schedule: schedule, sprint_counter: sprint_counter.pred, team_no: team) %>
-      <% end %>
+      <%= render TeamRow.with_collection(schedule[sprint_counter.pred]) %>
     </tbody>
   </table>
 </div>

@@ -5,7 +5,7 @@ class ShuffleSprintDevelopers < ApplicationService
 
   def initialize(params)
     @sprints = params[:sprints].to_i if params[:sprints].present?
-    @project = Project.find_by(id: params[:project_id])
+    @project = Project.includes(:sprints).find_by(id: params[:project_id])
     @current_user = User.find_by(id: params[:current_user_id])
     @view_schedule = params[:generate_schedule]
   end
@@ -38,8 +38,7 @@ class ShuffleSprintDevelopers < ApplicationService
   end
 
   def generate_sprint_schedules
-    project_sprints = @project.sprints
-    total_sprints = project_sprints.count
+    total_sprints = @project.sprints.count
     developers = @project.project_developers(@current_user)
 
     team_pairs_for_sprints = make_unique_pairs(developers)
@@ -61,10 +60,7 @@ class ShuffleSprintDevelopers < ApplicationService
   def replace_nil_from_pairs(team_pairs_for_sprints)
     team_pairs_for_sprints.each do |sprint_teams|
       sprint_teams.each do |team|
-        if team.include?(nil)
-          team.delete(nil)
-          team.push('N/A')
-        end
+        team.include?(nil) ? team.push('N/A').delete(nil) : next
       end
     end
   end
@@ -73,7 +69,7 @@ class ShuffleSprintDevelopers < ApplicationService
     existing_project_sprints = @project.sprints.count
     difference = (@sprints - existing_project_sprints)
     if difference.negative?
-      Project.first.sprints.order('created_at DESC').limit(difference.abs).destroy_all
+      @project.sprints.order('created_at DESC').limit(difference.abs).destroy_all
     else
       create_new_sprints(difference)
     end

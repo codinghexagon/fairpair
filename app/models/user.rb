@@ -3,15 +3,14 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :rememberable, :validatable
 
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
   has_many :subordinates, class_name: 'User', foreign_key: 'lead_id', dependent: :destroy, inverse_of: :lead
   belongs_to :lead, class_name: 'User', optional: true
 
-  validates :email, uniqueness: true
+  validates :email, presence: true, uniqueness: true
   validates :user_name, presence: true
 
   enum role: { lead: 0, developer: 1 }

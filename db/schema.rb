@@ -21,14 +21,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_005554) do
     t.index ["name"], name: "index_projects_on_name", unique: true
   end
 
-  create_table "schedules", force: :cascade do |t|
-    t.bigint "sprint_id", null: false
-    t.jsonb "pairs", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["sprint_id"], name: "index_schedules_on_sprint_id"
-  end
-
   create_table "sprints", force: :cascade do |t|
     t.string "name"
     t.bigint "project_id", null: false
@@ -59,6 +51,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_005554) do
     t.index ["lead_id"], name: "index_users_on_lead_id"
   end
 
-  add_foreign_key "schedules", "sprints"
   add_foreign_key "sprints", "projects"
 end

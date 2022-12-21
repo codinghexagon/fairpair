@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @developers = User.where(id: @project.user_projects.where.not(user_id: current_user.id).pluck(:user_id).uniq)
+    @developers = User.where(id: @project.project_developers(current_user))
     @sprints = @project.sprints.count
   end
 
@@ -51,9 +51,9 @@ class ProjectsController < ApplicationController
   end
 
   def manage_developers
-    @devs = @project.user_projects.where.not(user_id: current_user.id).pluck(:user_id)
-    developer_ids = current_user.subordinates.where.not(id: @devs)
-    @developers = User.where(id: developer_ids)
+    kaput_developer_ids = current_user.subordinates
+                                      .where.not(id: @project.project_developers(current_user))
+    @developers = User.where(id: kaput_developer_ids)
   end
 
   def add_developer
@@ -69,6 +69,6 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-    @project = Project.find_by(id: params[:id])
+    @project = Project.includes(:user_projects).find_by(id: params[:id])
   end
 end

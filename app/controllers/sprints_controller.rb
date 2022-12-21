@@ -2,7 +2,6 @@
 
 class SprintsController < ApplicationController
   before_action :set_project
-  # before_action :authorization
 
   def index
     @schedule = manage_sprint_schedule(schedule_service_params)
@@ -30,7 +29,12 @@ class SprintsController < ApplicationController
   end
 
   def set_project
-    @project = Project.with_sprints(params[:project_id])
+    @project = current_user.projects
+                           .where(id: params[:project_id])
+                           .with_sprints(params[:project_id])
+
+    return redirect_to root_path if @project.nil?
+
     authorize @project
   end
 

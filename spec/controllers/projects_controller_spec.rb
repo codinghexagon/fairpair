@@ -4,11 +4,12 @@ RSpec.describe ProjectsController, type: :controller do
   let!(:project_lead) { create(:user, role: 0) }
   let!(:developer) { create(:user, role: 1, lead_id: project_lead.id) }
   let!(:project) { create(:project) }
-  let!(:sprint) { create(:sprint) }
+  let!(:sprint) { create(:sprint, project_id: project.id) }
 
   before do
     sign_in(project_lead)
     project.users.push(project_lead)
+    allow(controller).to receive(:current_user) { project_lead }
   end
 
   describe 'GET /index' do
@@ -68,11 +69,11 @@ RSpec.describe ProjectsController, type: :controller do
   describe 'POST /create' do
     context 'with valid parameters' do
       it 'Creates a new Project' do
-        expect { post :create, params: { project: { name: 'Test Project' } } }.to change(Project, :count).by(1)
+        expect { post :create, params: { project: { name: Faker::Name.name } } }.to change(Project, :count).by(1)
       end
 
       it 'Redirects to the created project' do
-        post :create, params: { project: { name: 'Test Project' } }
+        post :create, params: { project: { name: Faker::Name.name } }
 
         expect(response).to redirect_to(projects_path)
       end
@@ -88,14 +89,14 @@ RSpec.describe ProjectsController, type: :controller do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       it 'Updates project' do
-        project_name = 'Test Project'
+        project_name = Faker::Name.name
         patch :update, params: { project: { name: project_name }, id: project.id }
 
         expect(project.reload.name).to eql(project_name)
       end
 
       it 'Redirects to the root path' do
-        patch :update, params: { project: { name: 'Test Project' }, id: project.id }
+        patch :update, params: { project: { name: Faker::Name.name }, id: project.id }
 
         expect(response).to redirect_to(root_path)
       end
@@ -105,7 +106,7 @@ RSpec.describe ProjectsController, type: :controller do
       it 'Renders edit when the project name is blank' do
         patch :update, params: { project: { name: '' }, id: project.id }
 
-        response.should render_template("edit")
+        response.should render_template('edit')
       end
     end
   end

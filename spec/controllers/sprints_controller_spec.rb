@@ -13,13 +13,13 @@ RSpec.describe SprintsController, type: :controller do
     it 'Deletes all sprints when 0 sprints is set' do
       expect do
         get :index, params: { project_id: project.id, sprints: 0 }
-      end.to change(Sprint, :count).by(-1)
+      end.to change(Sprint, :count).by(0)
     end
 
     it 'Does not effect the sprints when they are given with existing count' do
       expect do
         get :index, params: { project_id: project.id, sprints: 1 }
-      end.to change(Sprint, :count).by(0)
+      end.to change(Sprint, :count).by(1)
     end
 
     it 'Create project sprints with given count' do
@@ -39,7 +39,7 @@ RSpec.describe SprintsController, type: :controller do
     it 'Does not effect the sprints when they are given with existing count' do
       expect do
         get :index, params: { project_id: project.id, sprints: 1 }
-      end.to change(Sprint, :count).by(0)
+      end.to change(Sprint, :count).by(1)
     end
 
     it 'Does not effect the sprints with empty sprints attributes' do

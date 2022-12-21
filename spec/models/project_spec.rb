@@ -31,8 +31,9 @@ RSpec.describe Project, type: :model do
 
       it 'should return developer ids for the project' do
         user.subordinates << developer
-        test_project = user.projects.create(name: 'Test Project')
-        test_project.user_projects.create(user: developer)
+        test_project = user.projects.create(name: Faker::Name.unique.name)
+
+        user.projects.first.user_projects.create(user_id: developer.id) if test_project
 
         expect(test_project.project_developer_ids(user).last).to eq(developer.id)
       end

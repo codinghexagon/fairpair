@@ -6,6 +6,7 @@ class Project < ApplicationRecord
   has_many :sprints, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, length: 4..20, allow_blank: true
   scope :id_ordered_desc, -> { order(id: :desc) }
 
   def project_developer_ids(current_user)

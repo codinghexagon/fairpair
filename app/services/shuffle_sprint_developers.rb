@@ -7,8 +7,8 @@ class ShuffleSprintDevelopers < ApplicationService
 
   def initialize(params)
     @sprints = params[:sprints].to_i if params[:sprints].present?
-    @project = Project.with_sprints(params[:project_id])
     @current_user = User.find_by(id: params[:current_user_id])
+    @project = @current_user.projects.with_sprints(params[:project_id])
     @view_schedule = params[:generate_schedule]
   end
 
@@ -38,6 +38,8 @@ class ShuffleSprintDevelopers < ApplicationService
   end
 
   def generate_sprint_schedules
+    return [] if project.blank?
+ 
     developers = project.project_developer_ids(current_user)
     team_pairs_for_sprints = make_unique_pairs(developers)
 

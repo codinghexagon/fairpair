@@ -1,24 +1,52 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Local Development Setup
 
-Things you may want to cover:
+## Technology stack
 
-* Ruby version
+- Ruby 2.7.1
+- Ruby on Rails 7.0.4
+- PostgreSQL 14.5
+- Application Server: Puma
+- Component Library from Tailwind + Flowbite https://flowbite.com/docs/getting-started/introduction/
 
-* System dependencies
 
-* Configuration
+### Requirements
 
-* Database creation
+Before you get started, the following needs to be installed:
+  * **Ruby**. Version 2.7.1 is currently used and we don't guarantee everything works with other versions. If you need multiple versions of Ruby, [RVM](https://rvm.io//) or [rbenv](https://github.com/rbenv/rbenv) is recommended.
+  * **Bundler**: `gem install bundler`
+  * [**Git**](http://help.github.com/git-installation-redirect)
+  * **A database**. PostgreSQL 14.5 has been tested, so we give no guarantees that other databases (e.g. mySQL) work. You can install PostgreSQL by:
+  ```
+  sudo apt-get install postgresql-14.5
+  ```
+### Setting up the development environment
 
-* Database initialization
+1.  Get the code. Clone this git repository and check out the latest release:
 
-* How to run the test suite
+    ```bash
+    git clone https://github.com/
+    cd fairpair
+    ```
 
-* Services (job queues, cache servers, search engines, etc.)
+2.  Install the required gems by running the following command in the project root directory:
 
-* Deployment instructions
+    ```bash
+    bundle install
+    ```
 
-* ...
+3.  Precompile assets by running:
+    ```bash
+    bundle exec rails assets:precompile
+    ```
+   
+5.  Create and populate database with seeds using:
+    ```
+    rails db:create db:migrate db:seed
+    ```
+
+6.  Run server:
+
+    `rails server` or `rails s`
+
+Congratulations! Fair Pair should now be up and running for development purposes on http://localhost:3000/

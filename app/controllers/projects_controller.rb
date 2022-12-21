@@ -22,6 +22,7 @@ class ProjectsController < ApplicationController
 
   def show
     @developers = User.where(id: @project.user_projects.where.not(user_id: current_user.id).pluck(:user_id).uniq)
+    @sprints = @project.sprints.count 
   end
 
   def edit

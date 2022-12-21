@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       get :manage_developers
       get :add_developer
     end
+
+    resources :sprints, only: %i[new create update]
   end
   
 end

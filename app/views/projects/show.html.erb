@@ -2,9 +2,19 @@
 
 <h1><%= @project.name %></h1>
 <%= link_to 'manage developers', manage_developers_project_path(@project) %>
+<h3>Manage sprints</h3>
+
+<%= form_with url: project_sprints_path(@project), method: :post do |form| %>
+  <%= form.label :sprints %>
+  <%= form.number_field :sprints, required: true, min: 0, value: @sprints%>
+  <%= form.submit %>
+<% end %>
 
 
 <h1>project developrs</h1>
 <% @developers.each do |dev|%>
     <%= dev.user_name%>
 <% end %>
+
+<br>
+<%=link_to 'See Pairs' %>

@@ -39,18 +39,21 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    redirect_to projects_path, flash: { failure: 'Project cant be deleted' } unless @project.destroy
+    if @project.present?
+      redirect_to projects_path, flash: { failure: 'Project cant be deleted' } unless @project.destroy
 
-    respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Project was successfully destroyed.' }
-      format.turbo_stream
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Project was successfully destroyed.' }
+        format.turbo_stream
+      end
+    else
+      redirect_to projects_path, flash: { failure: 'Project does not exists.' }
     end
   end
 
   def manage_developers
-    kaput_developer_ids = current_user.subordinates
-                                      .where.not(id: @project.project_developer_ids(current_user))
-    @developers = User.where(id: kaput_developer_ids)
+    developer_ids = current_user.subordinates.where.not(id: @project.project_developer_ids(current_user))
+    @developers = User.where(id: developer_ids)
   end
 
   def add_developer

@@ -71,6 +71,7 @@ group :development, :test do
   gem 'rubocop', require: false
   # Automatic Rails code style checking tool. (https://github.com/rubocop/rubocop-rails)
   gem 'rubocop-rails', require: false
+  gem 'rails-controller-testing'
 end
 
 group :development do

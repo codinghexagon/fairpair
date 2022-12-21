@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get :add_developer
     end
 
-    resources :sprints, only: %i[new create update]
+    resources :sprints, only: %i[index create]
   end
   
 end

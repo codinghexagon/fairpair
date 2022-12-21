@@ -1,0 +1,23 @@
+<h1>sprints schedule for developers</h1>
+<%teams = @schedule.first.count%>
+<% @project.sprints.each_with_index do |sprint, index| %>
+    <h1><%= sprint.name %></h1>
+    <table  style="border: 2px solid #990000;">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Team Member 1</th>
+                <th>Team member 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% teams.times do |team| %>
+                <tr>
+                    <td><%= "team"%></td>
+                    <td><%=@schedule[index][team - 1].first %></td>
+                    <td><%=@schedule[index][team - 1].second %></td>
+                </tr>     
+            <%end%>
+        </tbody>
+    </table>
+<% end %>

@@ -1,35 +1,25 @@
 class SprintsController < ApplicationController
-    # include ShuffleSprintDevelopers
-
     before_action :set_project
-    # def new
-    #     @sprint = Sprint.new
-    # end
 
-    def create
-        project_devs = @project.user_projects.where.not(user_id: current_user.id)
-        previous_sprints = @project.sprints.count
-        debugger
-        if project_devs.blank? || previous_sprints.eql?(params["sprints"].to_i)
-            redirect_back fallback_location: project_path(@project)
-        else
-            service_params = { project_id: @project.id, sprints: params["sprints"], current_user_id: @current_user.id }
-            response = ShuffleSprintDevelopers.new(service_params).call
-        end
+    def index
+       service_params = service_params = { project_id: @project.id, current_user_id: current_user.id, generate_schedule: true }
+       @schedule = manage_sprint_schedule(service_params)
     end
 
-    # def show
-    # end
+    def create
+        service_params = { project_id: @project.id, sprints: params["sprints"], current_user_id: current_user.id }
+        manage_sprint_schedule(service_params)   
 
-    # def edit
-    # end
+        redirect_back fallback_location: project_path(@project)
+    end
 
-    # def update
-    # end
+    def manage_sprint_schedule(service_params)
+        response = ShuffleSprintDevelopers.new(service_params).call
+    end
 
     private
 
     def set_project
-        @project = Project.find_by(id: params[:project_id])
+        @project = Project.includes(:sprints).find_by(id: params[:project_id])
     end
 end

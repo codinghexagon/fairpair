@@ -2,13 +2,14 @@ class ShuffleSprintDevelopers < ApplicationService
     require "round_robin_tournament"
 
     def initialize(params)
-      @sprints = params[:sprints].to_i
+      @sprints = params[:sprints].to_i if params[:sprints].present?
       @project = Project.find_by(id: params[:project_id])
       @current_user = User.find_by(id: params[:current_user_id])
+      @view_schedule = params[:generate_schedule]
     end
   
     def call
-        project_name = @project.name.split.map(&:first).join.upcase
+        return generate_sprint_schedules if @view_schedule 
 
         if @project.sprints.exists?
             update_project_sprints
@@ -46,16 +47,30 @@ class ShuffleSprintDevelopers < ApplicationService
         developers = @project.project_developers(@current_user)
 
         team_pairs_for_sprints = make_unique_pairs(developers)
-        
+
         while team_pairs_for_sprints.count < total_sprints
-            team_pairs_for_sprints << make_unique_pairs(developers.shuffle).first
+            developers = developers.shuffle
+            team_pairs_for_sprints << make_unique_pairs(developers).last
         end
+        developers.delete(nil) if developers.include?(nil)
+        team_pairs_for_sprints = replace_nil_from_pairs(team_pairs_for_sprints) if developers.count.odd?
 
         team_pairs_for_sprints
     end
 
     def make_unique_pairs(developers)
         RoundRobinTournament.schedule(developers)
+    end
+
+    def replace_nil_from_pairs(team_pairs_for_sprints)
+        team_pairs_for_sprints.each do |sprint_teams|
+            sprint_teams.each do |team|
+                if team.include?(nil)
+                    team.delete(nil)
+                    team.push('N/A')
+                end
+            end
+        end
     end
 
     def update_project_sprints

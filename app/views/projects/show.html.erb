@@ -17,4 +17,6 @@
 <% end %>
 
 <br>
-<%=link_to 'See Pairs' %>
+<% if @project.project_developers(current_user).present? && @project.sprints.exists?%>
+  <%=link_to 'See Pairs', project_sprints_path(@project) %>
+<% end %>

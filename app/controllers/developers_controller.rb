@@ -3,8 +3,6 @@
 class DevelopersController < ApplicationController
   before_action :set_developer, except: %i[index create new]
 
-  def show; end
-
   def new
     @developer = User.new
     authorize @developer

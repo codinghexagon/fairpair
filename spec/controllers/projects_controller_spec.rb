@@ -47,7 +47,7 @@ RSpec.describe ProjectsController, type: :controller do
     it 'Renders a successful response' do
       get :new
 
-      expect(response).to be_successful
+      expect(response.status).to eql(200)
     end
 
     it 'assigns a new project to @project' do
@@ -61,7 +61,7 @@ RSpec.describe ProjectsController, type: :controller do
     it 'Render a successful response' do
       get :edit, params: { id: project.id }
 
-      expect(response).to be_successful
+      expect(response.status).to eql(200)
     end
   end
 
@@ -79,7 +79,7 @@ RSpec.describe ProjectsController, type: :controller do
     end
 
     context 'with invalid parameters' do
-      it 'Does not create a new Project because of empty namr' do
+      it 'Does not create a new Project because of empty name' do
         expect { post :create, params: { project: { name: '' } } }.to change(Project, :count).by(0)
       end
     end

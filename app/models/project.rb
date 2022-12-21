@@ -8,7 +8,7 @@ class Project < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   scope :id_ordered_desc, -> { order(id: :desc) }
 
-  def project_developers(current_user)
-    user_projects.where.not(user_id: current_user.id).distinct.pluck(:user_id)
+  def project_developer_ids(current_user)
+    user_projects.where.not(user_id: current_user.id).pluck(:user_id)
   end
 end

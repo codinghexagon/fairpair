@@ -10,7 +10,7 @@ class TeamRow < ViewComponent::Base
   end
 
   def first_member
-    User.find_by(id: @schedule.first).user_name
+    User.find_by(id: @schedule.first)&.user_name || 'N/A'
   end
 
   def second_member

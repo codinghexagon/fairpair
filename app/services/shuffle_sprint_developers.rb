@@ -16,36 +16,33 @@ class ShuffleSprintDevelopers < ApplicationService
     @project.sprints.exists? ? update_project_sprints : create_new_sprints
   end
 
+  private
+
   def create_new_sprints(difference = nil)
-    project_sprints = @sprints
+    last_version = difference.nil? ? total_sprints : 0
+    sprint_versions = [*last_version.succ..@sprints]
+    project_sprint_name = @project.name.split.map(&:first).join.upcase
 
-    last_version = get_last_sprint_version if difference
-    project_name = @project.name.split.map(&:first).join.upcase
-
-    sprint_versions = difference.present? ? [*last_version.succ..project_sprints] : [*1..project_sprints]
-
-    sprint_versions.each do |sprint|
-      @project.sprints.create(name: "#{project_name}-sprint-#{sprint.to_f}")
+    sprints = sprint_versions.map do |sprint|
+      [{ name: "#{project_sprint_name}-sprint-#{sprint}" }]
     end
+
+    @project.sprints.create(sprints)
   end
 
-  def get_last_sprint_version
-    @project.sprints.last.name.split('-')[-1].to_i
+  def update_project_sprints
+    difference = (@sprints - total_sprints)
+    @project.sprints.order('created_at DESC').limit(difference.abs).destroy_all if difference.negative?
+    create_new_sprints(difference) if difference.positive?
   end
 
   def generate_sprint_schedules
-    total_sprints = @project.sprints.count
-    developers = @project.project_developers(@current_user)
-
+    developers = @project.project_developer_ids(@current_user)
     team_pairs_for_sprints = make_unique_pairs(developers)
-
-    while team_pairs_for_sprints.count < total_sprints
-      developers = developers.shuffle
-      team_pairs_for_sprints << make_unique_pairs(developers).last
+    (total_sprints - team_pairs_for_sprints.count).times do |index|
+      team_pairs_for_sprints << team_pairs_for_sprints[index % total_sprints]
     end
-
-    developers.delete(nil) if developers.include?(nil)
-    team_pairs_for_sprints = replace_nil_from_pairs(team_pairs_for_sprints) if developers.count.odd?
+    # team_pairs_for_sprints.concat(team_pairs_for_sprints.first(total_sprints - team_pairs_for_sprints.count))
 
     team_pairs_for_sprints
   end
@@ -54,21 +51,7 @@ class ShuffleSprintDevelopers < ApplicationService
     RoundRobinTournament.schedule(developers)
   end
 
-  def replace_nil_from_pairs(team_pairs_for_sprints)
-    team_pairs_for_sprints.each do |sprint_teams|
-      sprint_teams.each do |team|
-        team.include?(nil) ? team.push('N/A').delete(nil) : next
-      end
-    end
-  end
-
-  def update_project_sprints
-    existing_project_sprints = @project.sprints.count
-    difference = (@sprints - existing_project_sprints)
-    if difference.negative?
-      @project.sprints.order('created_at DESC').limit(difference.abs).destroy_all
-    else
-      create_new_sprints(difference)
-    end
+  def total_sprints
+    @project.sprints.size
   end
 end

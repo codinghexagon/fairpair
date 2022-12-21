@@ -61,7 +61,7 @@ gem 'round_robin_tournament', '~> 0.1.1'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  #rspec for test cases
+  # rspec for test cases
   gem 'rspec-rails'
   # factory bot for factories
   gem 'factory_bot_rails'
@@ -88,8 +88,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'webdrivers'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'webdrivers'
 end
 
 gem 'tailwindcss-rails', '~> 2.0'

@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @developers = User.where(id: @project.project_developers(current_user))
+    @developers = User.where(id: @project.project_developer_ids(current_user))
     @sprints = @project.sprints.count
   end
 
@@ -49,7 +49,7 @@ class ProjectsController < ApplicationController
 
   def manage_developers
     kaput_developer_ids = current_user.subordinates
-                                      .where.not(id: @project.project_developers(current_user))
+                                      .where.not(id: @project.project_developer_ids(current_user))
     @developers = User.where(id: kaput_developer_ids)
   end
 

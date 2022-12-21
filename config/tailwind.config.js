@@ -5,7 +5,8 @@ module.exports = {
     './public/*.html',
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
-    './app/views/**/*.{erb,haml,html,slim}'
+    './app/views/**/*.{erb,haml,html,slim}',
+    './app/components/*.{erb,haml,html,slim}'
   ],
   theme: {
     extend: {
@@ -17,6 +18,9 @@ module.exports = {
       },
       animation: {
         "fade-in": 'fade-in 0.5s ease-in-out',
+      },
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       }
     },
     container: {
@@ -28,11 +32,6 @@ module.exports = {
         lg: '984px',
         xl: '1400px',
         '2xl': '2520px',
-      },
-    },
-    extend: {
-      fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
     },
   },

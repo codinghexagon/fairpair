@@ -21,8 +21,7 @@ class ShuffleSprintDevelopers < ApplicationService
   private
 
   def create_new_sprints(difference = nil)
-    last_version = difference.nil? ? total_sprints : 0
-    sprint_versions = [*last_version.succ..sprints]
+    sprint_versions = [*total_sprints.succ..sprints]
     project_sprint_name = project.name.split.map(&:first).join.upcase
 
     sprints = sprint_versions.map do |sprint|
@@ -45,6 +44,7 @@ class ShuffleSprintDevelopers < ApplicationService
     (total_sprints - team_pairs_for_sprints.count).times do |index|
       team_pairs_for_sprints << team_pairs_for_sprints[index % total_sprints]
     end
+
     team_pairs_for_sprints
   end
 

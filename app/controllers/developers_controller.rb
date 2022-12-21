@@ -7,13 +7,15 @@ class DevelopersController < ApplicationController
 
   def new
     @developer = User.new
+    authorize @developer
   end
 
-  def edit; end
+  def edit
+  end
 
   def create
     @developer = User.new(user_params)
-
+    authorize @developer
     if @developer.save
       current_user.subordinates << @developer
 
@@ -53,5 +55,6 @@ class DevelopersController < ApplicationController
 
   def set_developer
     @developer = User.find_by(id: params[:id])
+    authorize @developer
   end
 end

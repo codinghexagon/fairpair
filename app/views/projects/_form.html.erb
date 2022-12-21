@@ -1,8 +1,13 @@
 <%= form_with model: project do |form| %>
+  <% if project.errors.any? %>
+    <% project.errors.full_messages.each do |message|%>
+      <h3><%= message %> </h3>
+    <%end%>
+  <%end%>
   <div class='mb-6'>
     <%= form.label :name, class:'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
     <div class='flex flex-row justify-between'>
-      <%= form.text_field :name, class: 'mr-2 input-field' %>
+      <%= form.text_field :name, class: 'mr-2 input-field', required: true %>
       <%= link_to 'Cancel', root_path, class: 'btn-danger' %>
       <%= form.submit 'Submit', class: 'btn-primary'  %>
     </div>

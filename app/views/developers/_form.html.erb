@@ -1,14 +1,20 @@
 <%= form_with model: developer, url: url, method: method do |form| %>
+  <% if developer.errors.any? %>
+    <% developer.errors.full_messages.each do |message|%>
+      <h3><%= message %> </h3>
+    <%end%>
+  <%end%>
+
   <%= form.hidden_field :role, value: :developer %>
 
   <div class='mb-6'>
     <%= form.label :email, class:'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-    <%= form.text_field :email, class: 'mr-2 input-field' %>
+    <%= form.text_field :email, class: 'mr-2 input-field', required: true %>
   </div>
   <div class='mb-6'>
     <%= form.label :user_name, class:'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
     <div class='flex flex-row justify-between'>
-      <%= form.text_field :user_name, class: 'mr-2 input-field' %>
+      <%= form.text_field :user_name, class: 'mr-2 input-field', required: true %>
 
       <%= link_to 'Cancel', root_path, class: 'btn-danger' %>
       <%= form.submit 'Submit', class: 'btn-primary'  %>

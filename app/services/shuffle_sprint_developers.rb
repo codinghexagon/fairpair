@@ -6,8 +6,6 @@ class ShuffleSprintDevelopers < ApplicationService
   attr_accessor :sprint, :project, :current_user, :view_schedule
 
   def initialize(params)
-    super
-
     @sprints = params[:sprints].to_i if params[:sprints].present?
     @project = Project.with_sprints(params[:project_id])
     @current_user = User.find_by(id: params[:current_user_id])
@@ -47,7 +45,6 @@ class ShuffleSprintDevelopers < ApplicationService
     (total_sprints - team_pairs_for_sprints.count).times do |index|
       team_pairs_for_sprints << team_pairs_for_sprints[index % total_sprints]
     end
-
     team_pairs_for_sprints
   end
 

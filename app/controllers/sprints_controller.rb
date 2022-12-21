@@ -2,12 +2,14 @@
 
 class SprintsController < ApplicationController
   before_action :set_project
+  # before_action :authorization
 
   def index
     @schedule = manage_sprint_schedule(schedule_service_params)
   end
 
   def create
+
     manage_sprint_schedule(schedule_service_params)
 
     redirect_back fallback_location: project_path(@project)
@@ -30,5 +32,10 @@ class SprintsController < ApplicationController
 
   def set_project
     @project = Project.with_sprints(params[:project_id])
+    authorize @project
+  end
+
+  def authorization
+    authorize Sprint
   end
 end

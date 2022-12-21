@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class ProjectsController < ApplicationController
+  # before_action :authorization
   before_action :set_project, except: %i[index create new]
 
   def index
     @projects = current_user.projects.id_ordered_desc
     @developers = current_user.subordinates.id_ordered_desc
+    authorize @projects
   end
 
   def show
@@ -21,12 +23,13 @@ class ProjectsController < ApplicationController
 
   def create
     @project = current_user.projects.create(project_params)
-
-    render :new, status: :unprocessable_entity unless @project
-
-    respond_to do |format|
-      format.html { redirect_to projects_path, notice: 'Project was successfully created.' }
-      format.turbo_stream
+    if @project.valid?
+      respond_to do |format|
+        format.html { redirect_to projects_path, notice: 'Project was successfully created.' }
+        format.turbo_stream
+      end
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -73,6 +76,9 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-    @project = Project.with_sprints(params[:id])
+    @project = Project.preload(:user_projects).find_by(id: params[:id])
+    return redirect_to root_path if @project.nil?
+
+    authorize @project
   end
 end

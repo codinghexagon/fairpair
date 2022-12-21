@@ -16,7 +16,7 @@
   <div class='flex items-center justify-center'>
     <%= link_to 'Home Page', root_path, class: 'btn-primary' %>
     <% if @project.project_developer_ids(current_user).present? && @project.sprints.exists?%>
-      <%=link_to 'See Pairs', project_sprints_path(@project), class: 'btn-primary' %>
+      <%=link_to 'See Schedule', project_sprints_path(@project), class: 'btn-primary' %>
     <% end %>
   </div>
 </div>

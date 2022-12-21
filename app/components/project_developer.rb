@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-class ProjectDeveloperComponent < ViewComponent::Base
+class ProjectDeveloper < ViewComponent::Base
   with_collection_parameter :developer
-  attr_reader :developer
+
+  attr_reader :developer, :project
 
   def initialize(developer: nil, project: nil)
     super

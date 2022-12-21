@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class SprintModalComponent < ViewComponent::Base
+class SprintModal < ViewComponent::Base
+  attr_reader :project, :sprints
+
   def initialize(project: nil, sprints: nil)
     super
     @project = project

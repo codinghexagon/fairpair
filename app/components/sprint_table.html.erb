@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <% 0.upto(team_count-1) do |team| %>
-        <%= render TeamRowComponent.new(schedule: @schedule, sprint_counter: @sprint_counter.pred, team_no: team) %>
+        <%= render TeamRow.new(schedule: schedule, sprint_counter: sprint_counter.pred, team_no: team) %>
       <% end %>
     </tbody>
   </table>

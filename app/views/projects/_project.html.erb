@@ -1,12 +1,12 @@
 <%= turbo_frame_tag project do %>
-  <div class="flex flex-row justify-between bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-    <div class="py-4 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white">
+  <div class='flex flex-row justify-between bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+    <div class='py-4 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white'>
       <p class='text-lg'><%= project.name %></p>
     </div>
-    <div class="flex flex-row justify-end py-4 px-6">
-      <%= link_to 'View', project_path(project), class:"btn-primary" %>
-      <%= link_to 'Edit', edit_project_path(project), class:"btn-success" %>
-      <%= button_to "Destroy", project_path(project), method: :delete, class: "btn-danger" %>
+    <div class='flex flex-row justify-end py-4 px-6'>
+      <%= link_to 'View', project_path(project), class: 'btn-primary' %>
+      <%= link_to 'Edit', edit_project_path(project), class: 'btn-success' %>
+      <%= button_to 'Destroy', project_path(project), method: :delete, class: 'btn-danger' %>
     </div>
   </div>
 <% end %>

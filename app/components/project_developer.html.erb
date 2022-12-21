@@ -1,10 +1,10 @@
-<turbo-frame id="developer-<%= @developer.id%>">
+<turbo-frame id="developer-<%= developer.id %>">
   <div class="flex flex-row justify-between bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
     <div class="py-4 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white">
-      <p class='text-xl'><%= @developer.user_name %></p>
+      <p class='text-xl'><%= developer.user_name %></p>
     </div>
     <div class="flex flex-row justify-end py-4 px-6">
-      <%= button_to 'Un-Assign', user_projects_path(project_id: @project.id, developer_id: @developer.id), method: :delete, class: "btn-danger" %>
+      <%= button_to 'Un-Assign', user_projects_path(project_id: project.id, developer_id: developer.id), method: :delete, class: "btn-danger" %>
     </div>
   </div>
 </turbo-frame>

@@ -13,11 +13,7 @@ class ShuffleSprintDevelopers < ApplicationService
   def call
     return generate_sprint_schedules if @view_schedule
 
-    if @project.sprints.exists?
-      update_project_sprints
-    else
-      create_new_sprints
-    end
+    @project.sprints.exists? ? update_project_sprints : create_new_sprints
   end
 
   def create_new_sprints(difference = nil)

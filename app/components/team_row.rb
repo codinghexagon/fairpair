@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TeamRowComponent < ViewComponent::Base
+class TeamRow < ViewComponent::Base
   attr_reader :schedule
 
   def initialize(schedule: nil, sprint_counter: nil, team_no: nil)

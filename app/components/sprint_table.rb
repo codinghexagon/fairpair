@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class SprintTableComponent < ViewComponent::Base
+class SprintTable < ViewComponent::Base
   with_collection_parameter :sprint
-  attr_reader :sprint
+  attr_reader :sprint, :schedule, :sprint_counter
 
   def initialize(sprint: nil, sprint_counter: nil, schedule: nil)
     super
@@ -12,6 +12,6 @@ class SprintTableComponent < ViewComponent::Base
   end
 
   def team_count
-    @schedule.first.count
+    schedule.first.count
   end
 end

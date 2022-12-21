@@ -1,20 +1,20 @@
-<div class="container">
+<div class='container'>
   <div class='flex flex-row justify-between mb-10'>
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white"> Projects </h1>
-    <%= link_to "Add Project", new_project_path, class: "btn-success", data: { turbo_frame: dom_id(Project.new) } %>
+    <h1 class='text-3xl font-bold tracking-tight text-gray-900 dark:text-white'> Projects </h1>
+    <%= link_to 'Add Project', new_project_path, class: 'btn-success', data: { turbo_frame: dom_id(Project.new) } %>
   </div>
   <%= turbo_frame_tag Project.new %>
-  <%= turbo_frame_tag "projects", class: "flex flex-col justify-start" do %>
+  <%= turbo_frame_tag 'projects', class: 'flex flex-col justify-start' do %>
     <%= render @projects %>
   <% end %>
 </div>
-<div class="container">
+<div class='container'>
   <div class='flex flex-row justify-between mb-10'>
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white"> Developers </h1>
-    <%= link_to "Add Developer", new_developer_path, class: "btn-success", data: { turbo_frame: dom_id(User.new) } %>
+    <h1 class='text-3xl font-bold tracking-tight text-gray-900 dark:text-white'> Developers </h1>
+    <%= link_to 'Add Developer', new_developer_path, class: 'btn-success', data: { turbo_frame: dom_id(User.new) } %>
   </div>
   <%= turbo_frame_tag User.new %>
-  <%= turbo_frame_tag "developers", class: "flex flex-col justify-start" do %>
-    <%= render( DevRowComponent.with_collection(@developers) ) %>
+  <%= turbo_frame_tag 'developers', class: 'flex flex-col justify-start' do %>
+    <%= render(DevRow.with_collection(@developers)) %>
   <% end %>
 </div>

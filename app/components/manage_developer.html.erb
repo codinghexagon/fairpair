@@ -1,8 +1,8 @@
 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
   <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-    <%= @developer.user_name %>
+    <%= developer.user_name %>
   </th>
   <td class="text-right py-4 px-6">
-    <%= link_to 'Add to Project', add_developer_project_path(@project, :developer_id => developer.id), class: "btn-success" %>
+    <%= link_to 'Add to Project', add_developer_project_path(@project, developer_id: developer.id), class: "btn-success" %>
   </td>
 </tr>

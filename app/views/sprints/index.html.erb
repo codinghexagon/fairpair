@@ -1,7 +1,8 @@
 <div class='container flex flex-col'>
-  <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white" >Sprints schedule</h1>
+  <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Sprints schedule</h1>
   <div class="overflow-x-auto relative mt-5">
-    <%= render( SprintTableComponent.with_collection(@project.sprints, schedule: @schedule) ) %>
+    <%= render(SprintTable.with_collection(@project.sprints, schedule: @schedule)) %>
+
     <% @project.sprints.each_with_index do |sprint, index| %>
     <% end %>
   </div>

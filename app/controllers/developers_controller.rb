@@ -16,6 +16,7 @@ class DevelopersController < ApplicationController
 
     if @developer.save
       current_user.subordinates << @developer
+
       respond_to do |format|
         format.html { redirect_to root_path }
         format.turbo_stream
@@ -40,15 +41,14 @@ class DevelopersController < ApplicationController
         format.turbo_stream
       end
     else
-      flash[:failure] = 'User cant be deleted'
-      redirect_to projects_path
+      redirect_to projects_path, flash: { failure: 'Unable to delete user' }
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :user_name).tap { |additional_param| additional_param[:role] = 1 }
+    params.require(:user).permit(:email, :user_name, :role)
   end
 
   def set_developer

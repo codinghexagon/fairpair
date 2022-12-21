@@ -1,2 +1,2 @@
-<%= turbo_stream.prepend "developers", render( DevRowComponent.new(developer: @developer) ) %>
-<%= turbo_stream.update User.new, "" %>
+<%= turbo_stream.prepend 'developers', render(DevRow.new(developer: @developer)) %>
+<%= turbo_stream.update User.new, '' %>

@@ -7,17 +7,17 @@ class User < ApplicationRecord
 
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
-  has_many :subordinates, class_name: 'User', foreign_key: 'lead_id', dependent: :destroy, inverse_of: :lead
+  has_many :subordinates, class_name: 'User', foreign_key: :lead_id, dependent: :destroy, inverse_of: :lead
   belongs_to :lead, class_name: 'User', optional: true
 
   validates :email, presence: true, uniqueness: true
   validates :user_name, presence: true
 
-  scope :ordered, -> { order(id: :desc) }
+  before_validation :nullify_password_for_developers
 
   enum role: { lead: 0, developer: 1 }
 
-  before_validation :nullify_password_for_developers
+  scope :id_ordered_desc, -> { order(id: :desc) }
 
   attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
 

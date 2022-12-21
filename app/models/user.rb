@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :projects, through: :user_projects
 
   validates :email, uniqueness: true
-  validates :name, presence: true
+  validates :user_name, presence: true
 
   enum role: {lead: 0, developer: 1}
 end

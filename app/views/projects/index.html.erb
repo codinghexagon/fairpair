@@ -1,0 +1,11 @@
+<h1>Projects#index</h1>
+
+<ul>
+  <% @projects.each do |project| %>
+    <li>
+        <%= link_to project.name, project_path(project) %>
+        <%= link_to 'Edit', edit_project_path(project) %>
+        <li><%= button_to "Destroy", project_path(project), method: :delete, data: { confirm: "Are you sure?" } %></li>
+    </li>
+  <% end %>
+</ul>

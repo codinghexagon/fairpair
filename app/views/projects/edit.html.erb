@@ -1,0 +1,7 @@
+<h1>Projects#edit</h1>
+<h3>edit a Project</h3>
+
+<%= form_with model: @project do |f| %>
+  <%= f.text_field :name, placeholder: "name" %>
+  <%= f.submit %>
+<% end %>

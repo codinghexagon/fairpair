@@ -6,7 +6,6 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = current_user.projects.id_ordered_desc
-    @developers = current_user.subordinates.id_ordered_desc
     authorize @projects
   end
 

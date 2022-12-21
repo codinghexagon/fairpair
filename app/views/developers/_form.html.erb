@@ -9,15 +9,18 @@
 
   <div class='mb-6'>
     <%= form.label :email, class:'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-    <%= form.text_field :email, class: 'mr-2 input-field', required: true %>
+    <%= form.text_field :email, class: 'mr-2 input-field', required: true, autofocus: true %>
   </div>
   <div class='mb-6'>
     <%= form.label :user_name, class:'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
     <div class='flex flex-row justify-between'>
       <%= form.text_field :user_name, class: 'mr-2 input-field', required: true %>
-
-      <%= link_to 'Cancel', root_path, class: 'btn-danger' %>
-      <%= form.submit 'Submit', class: 'btn-primary'  %>
+      <%= link_to developers_path, class: 'btn-danger' do %>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      <% end %>
+      <%= button_tag class: 'btn-primary' do %>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+      <% end %>
     </div>
   </div>
 <% end %>

@@ -1,20 +1,30 @@
 <div class='container'>
   <div class='flex flex-row justify-between mb-10'>
-    <h1 class='text-3xl font-bold tracking-tight text-gray-900 dark:text-white'><%= @project.name %></h1>
+    <div class='flex items-center'>
+      <%= link_to root_path, class: 'text-gray-900 dark:text-white' do %>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      <% end %>
+      <h2 class='text-3xl font-bold tracking-tight text-gray-900 dark:text-white'><%= @project.name %></h2>
+    </div>
     <div data-controller='modal' class='flex flex-row justify-between'>
       <button data-action= 'modal#open_sprint', class='btn-success' >Manage Sprints</button>
       <%= render(SprintModal.new(project: @project, sprints: @sprints)) %>
       <%= link_to 'Add Devs', manage_developers_project_path(@project), class: 'btn-success' %>
     </div>
   </div>
-  <div class='mb-5'>
-    <h3 class='text-xl font-bold tracking-tight text-gray-900 dark:text-white'>Developer Team:</h3>
-    <%= turbo_frame_tag 'project_developers', class: 'flex flex-col justify-start mb-3' do %>
-      <%= render(ProjectDeveloper.with_collection(@developers, project: @project)) %>
-    <% end %>
-  </div>
+  <% if @developers.any? %>
+    <div class='ml-5'>
+      <h3 class='text-xl font-bold tracking-tight text-gray-900 dark:text-white'>Projet Team:</h3>
+      <%= turbo_frame_tag 'project_developers', class: 'flex flex-col justify-start mb-3' do %>
+        <%= render(ProjectDeveloper.with_collection(@developers, project: @project)) %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class='text-center mt-10 mb-5'>
+      <h3 class='text-xl font-bold tracking-tight text-gray-900 dark:text-white'>Add Devs to the project to see the list here!</h3>
+    </div>
+  <% end %>
   <div class='flex items-center justify-center'>
-    <%= link_to 'Home Page', root_path, class: 'btn-primary' %>
     <% if @project.project_developer_ids(current_user).present? && @project.sprints.exists?%>
       <%=link_to 'See Schedule', project_sprints_path(@project), class: 'btn-primary' %>
     <% end %>

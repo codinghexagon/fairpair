@@ -12,10 +12,10 @@
   </head>
 
   <body class='dark:bg-gray-800'>
+    <%= render 'layouts/navbar' %>
     <p class='notice'><%= notice %></p>
     <p class='alert'><%= alert %></p>
-    <%= render 'layouts/navbar' %>
-    <main class='container max-auto mt-10 px-5 flex'>
+    <main class='container max-auto mt-5 px-5 flex'>
       <%= yield %>
     </main>
   </body>

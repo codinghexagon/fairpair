@@ -4,8 +4,8 @@ class ProjectsController < ApplicationController
   before_action :set_project, except: %i[index create new]
 
   def index
-    @projects = current_user.projects
-    @developers = current_user.subordinates
+    @projects = current_user.projects.ordered
+    @developers = current_user.subordinates.ordered
   end
 
   def show
@@ -21,16 +21,20 @@ class ProjectsController < ApplicationController
 
   def create
     @project = current_user.projects.create(project_params)
+
     if @project
-      redirect_to project_path(@project)
+      respond_to do |format|
+        format.html { redirect_to projects_path, notice: 'Project was successfully created.' }
+        format.turbo_stream
+      end
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @project.update(project_params)
-      redirect_to @project
+      redirect_to root_path
     else
       render :edit
     end
@@ -39,10 +43,8 @@ class ProjectsController < ApplicationController
   def destroy
     if @project.destroy
       respond_to do |format|
-        format.html do
-          flash[:success] = 'Project removed successfully'
-          redirect_to projects_path
-        end
+        format.html { redirect_to root_path, notice: 'Project was successfully destroyed.' }
+        format.turbo_stream
       end
     else
       flash[:failure] = 'Project cant be deleted'

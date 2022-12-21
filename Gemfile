@@ -67,6 +67,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   # faker for dummy data
   gem 'faker'
+  # Automatic Ruby code style checking tool. (https://github.com/rubocop/rubocop)
+  gem 'rubocop', require: false
+  # Automatic Rails code style checking tool. (https://github.com/rubocop/rubocop-rails)
+  gem 'rubocop-rails', require: false
 end
 
 group :development do
@@ -87,3 +91,7 @@ group :test do
   gem 'webdrivers'
   gem 'shoulda-matchers', '~> 5.0'
 end
+
+gem 'tailwindcss-rails', '~> 2.0'
+
+gem 'view_component', '~> 2.79'

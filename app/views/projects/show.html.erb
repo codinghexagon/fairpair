@@ -1,22 +1,22 @@
-<h1>Projects show page</h1>
-
-<h1><%= @project.name %></h1>
-<%= link_to 'manage developers', manage_developers_project_path(@project) %>
-<h3>Manage sprints</h3>
-
-<%= form_with url: project_sprints_path(@project), method: :post do |form| %>
-  <%= form.label :sprints %>
-  <%= form.number_field :sprints, required: true, min: 0, value: @sprints%>
-  <%= form.submit %>
-<% end %>
-
-
-<h1>project developrs</h1>
-<% @developers.each do |dev|%>
-    <%= dev.user_name%>
-<% end %>
-
-<br>
-<% if @project.project_developers(current_user).present? && @project.sprints.exists?%>
-  <%=link_to 'See Pairs', project_sprints_path(@project) %>
-<% end %>
+<div class="container">
+  <div class='flex flex-row justify-between mb-10'>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white"><%= @project.name %></h1>
+    <div data-controller="modal" class='flex flex-row justify-between'>
+      <button data-action= 'modal#open_sprint', class="btn-success" >Manage Sprints</button>
+      <%= render( SprintModalComponent.new(project: @project, sprints: @sprints) ) %>
+      <%= link_to 'Add Devs', manage_developers_project_path(@project), class: "btn-success" %>
+    </div>
+  </div>
+  <div class='mb-5'>
+    <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Developer Team:</h3>
+    <%= turbo_frame_tag "project_developers", class: "flex flex-col justify-start mb-3" do %>
+      <%= render( ProjectDeveloperComponent.with_collection(@developers, project: @project) ) %>
+    <% end %>
+  </div>
+  <div class='flex items-center justify-center'>
+    <%= link_to 'Home Page', root_path, class: "btn-primary" %>
+    <% if @project.project_developers(current_user).present? && @project.sprints.exists?%>
+      <%=link_to 'See Pairs', project_sprints_path(@project), class: "btn-primary" %>
+    <% end %>
+  </div>
+</div>

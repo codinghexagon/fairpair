@@ -1,9 +1,3 @@
-<h1>User#new</h1>
-<h3>Edit a User</h3>
-
-
-<%= form_with model: @developer, url: developer_path(@developer), method: :put do |form| %>
-  <%= form.text_field :email %>
-  <%= form.text_field :user_name %>
-  <%= form.submit "update developer" %>
+<%= turbo_frame_tag "dev-row-#{@developer.id}" do %>
+  <%= render "form", developer: @developer, method: :put, url: developer_path %>
 <% end %>

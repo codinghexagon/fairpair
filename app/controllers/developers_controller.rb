@@ -13,17 +13,21 @@ class DevelopersController < ApplicationController
 
   def create
     @developer = User.new(user_params)
+
     if @developer.save
       current_user.subordinates << @developer
-      redirect_to developer_path(@developer)
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream
+      end
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @developer.update(user_params)
-      redirect_to developer_path(@developer)
+      redirect_to root_path
     else
       render :edit
     end
@@ -32,10 +36,8 @@ class DevelopersController < ApplicationController
   def destroy
     if @developer.destroy
       respond_to do |format|
-        format.html do
-          flash[:success] = 'User removed successfully'
-          redirect_to projects_path
-        end
+        format.html { redirect_to root_path }
+        format.turbo_stream
       end
     else
       flash[:failure] = 'User cant be deleted'

@@ -1,28 +1,20 @@
-
-<h1>Projects</h1>
-
-<ul>
-  <% @projects.each do |project| %>
-    <li>
-        <%= link_to project.name, project_path(project) %>
-        <%= link_to 'Edit', edit_project_path(project) %>
-        <li><%= button_to "Destroy", project_path(project), method: :delete, data: { confirm: "Are you sure?" } %></li>
-    </li>
+<div class="container">
+  <div class='flex flex-row justify-between mb-10'>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white"> Projects </h1>
+    <%= link_to "Add Project", new_project_path, class: "btn-success", data: { turbo_frame: dom_id(Project.new) } %>
+  </div>
+  <%= turbo_frame_tag Project.new %>
+  <%= turbo_frame_tag "projects", class: "flex flex-col justify-start" do %>
+    <%= render @projects %>
   <% end %>
-</ul>
-
-
-<h1>Developers</h1>
-
-<ul>
-  <% @developers.each do |developer| %>
-    <li>
-        <%= link_to developer.user_name, developer_path(developer) %>
-        <%= link_to 'Edit', edit_developer_path(developer) %>
-        <li><%= button_to "Destroy", developer_path(developer), method: :delete, data: { confirm: "Are you sure?" } %></li>
-    </li>
+</div>
+<div class="container">
+  <div class='flex flex-row justify-between mb-10'>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white"> Developers </h1>
+    <%= link_to "Add Developer", new_developer_path, class: "btn-success", data: { turbo_frame: dom_id(User.new) } %>
+  </div>
+  <%= turbo_frame_tag User.new %>
+  <%= turbo_frame_tag "developers", class: "flex flex-col justify-start" do %>
+    <%= render( DevRowComponent.with_collection(@developers) ) %>
   <% end %>
-</ul>
-
-
-<%= link_to 'Add Developers', new_developer_path%>
+</div>

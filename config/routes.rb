@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :developers
+  resources :developers, except: :show
 
   resources :projects do
     member do
@@ -15,4 +15,6 @@ Rails.application.routes.draw do
 
     resources :sprints, only: %i[index create]
   end
+
+  resource :user_projects, only: [:destroy]
 end

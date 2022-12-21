@@ -1,6 +1,23 @@
-<h1>manage developers page</h1>
-
-<% @developers.each do |developer| %>
-<%= developer.user_name %>
-<%= link_to 'add to project', add_developer_project_path(@project, :developer_id => developer.id)%>
-<%end%>
+<div class='container flex flex-col'>
+  <h3 class="text-xl font-bold mb-3 tracking-tight text-gray-900 dark:text-white">Developer Team:</h3>
+  <div class="overflow-x-auto relative shadow-md sm:rounded-lg mb-2">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="py-3 px-6">
+            Developer name
+          </th>
+          <th scope="col" class="py-3 px-6">
+            <span class="sr-only">Edit</span>
+          </th>
+          </tr>
+      </thead>
+      <tbody>
+        <%= render( ManageDeveloperComponent.with_collection(@developers, project: @project) ) %>
+      </tbody>
+    </table>
+  </div>
+  <div class='flex items-center justify-center'>
+    <%= link_to 'Back to Projet', project_path(@project), class: 'btn-primary'%>
+  </div>
+</div>

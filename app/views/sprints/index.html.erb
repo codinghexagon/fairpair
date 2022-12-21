@@ -1,23 +1,11 @@
-<h1>sprints schedule for developers</h1>
-<%teams = @schedule.first.count%>
-<% @project.sprints.each_with_index do |sprint, index| %>
-    <h1><%= sprint.name %></h1>
-    <table  style="border: 2px solid #990000;">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Team Member 1</th>
-                <th>Team member 2</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% teams.times do |team| %>
-                <tr>
-                    <td><%= "team"%></td>
-                    <td><%=@schedule[index][team - 1].first %></td>
-                    <td><%=@schedule[index][team - 1].second %></td>
-                </tr>     
-            <%end%>
-        </tbody>
-    </table>
-<% end %>
+<div class='container flex flex-col'>
+  <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white" >Sprints schedule</h1>
+  <div class="overflow-x-auto relative mt-5">
+    <%= render( SprintTableComponent.with_collection(@project.sprints, schedule: @schedule) ) %>
+    <% @project.sprints.each_with_index do |sprint, index| %>
+    <% end %>
+  </div>
+  <div class='flex items-center justify-center'>
+    <%= link_to 'Back', project_path(@project), class: 'btn-primary' %>
+  </div>
+</div>

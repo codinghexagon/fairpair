@@ -13,6 +13,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :user_name, presence: true
 
+  scope :ordered, -> { order(id: :desc) }
+
   enum role: { lead: 0, developer: 1 }
 
   before_validation :nullify_password_for_developers

@@ -1,0 +1,14 @@
+<turbo-frame id="dev-row-<%= @developer.id%>">
+  <div class="flex flex-row justify-between bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+    <div class="py-4 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white">
+      <p class='text-xl'><%= @developer.user_name %></p>
+    </div>
+    <div class="py-4 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white">
+      <p class='text-xl'><%= @developer.email %></p>
+    </div>
+    <div class="flex flex-row justify-end py-4 px-6">
+      <%= link_to 'Edit', edit_developer_path(@developer), class:"btn-success" %>
+      <%= button_to "Destroy", developer_path(@developer), method: :delete, confirm: "Are you sure?", class: "btn-danger" %>
+    </div>
+  </div>
+</turbo-frame>

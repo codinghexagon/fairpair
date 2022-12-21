@@ -1,0 +1,14 @@
+<%= form_with model: developer, url: url, method: method do |form| %>
+  <div class="mb-6">
+    <%= form.label :email, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :email, class: "mr-2 input-field" %>
+  </div>
+  <div class="mb-6">
+    <%= form.label :user_name, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <div class='flex flex-row justify-between'>
+      <%= form.text_field :user_name, class: "mr-2 input-field" %>
+      <%= link_to "Cancel", root_path, class: "btn-danger" %>
+      <%= form.submit 'Submit', class: "btn-primary"  %>
+    </div>
+  </div>
+<% end %>

@@ -15,4 +15,4 @@ RSpec.describe Project, type: :model do
       it { should have_many(:users).through(:user_projects) }
     end
   end
-end
+end 
